@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b2e59">
+<meta name="description" content="ปฏิทินไทย พ.ศ. 2569 / ค.ศ. 2026 ปฏิทินสุริยคติ วันสำคัญ วันหยุด และวันพระ">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icons/icon-192.png">
+<title>ปฏิทินไทย 2569 | Thai Calendar 2026</title>
+<style>
+:root{--navy:#082b55;--blue:#0b63a8;--gold:#e9b949;--bg:#f2f6fb;--ink:#152b45;--muted:#61758b;--card:#fff;--line:#dce6f1;--red:#c73535;--green:#167b62}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans Thai",Tahoma,sans-serif}
+header{background:linear-gradient(120deg,#061f42,#0c5792);color:#fff;padding:22px max(16px,calc((100vw - 1200px)/2));border-bottom:4px solid var(--gold)}
+.headerline{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}h1{font-size:clamp(1.45rem,4vw,2.4rem);margin:0;color:#fff}header p{margin:6px 0 0;color:#dcecff}.actions{display:flex;gap:8px;flex-wrap:wrap}
+button,select,input{font:inherit;border:1px solid var(--line);border-radius:10px;padding:9px 12px;background:#fff;color:var(--ink)}button{cursor:pointer;font-weight:650}button.primary{background:var(--gold);border-color:var(--gold);color:#1b2d43}button.dark{background:#123f70;color:#fff;border-color:#3c6d9c}
+main{max-width:1200px;margin:18px auto;padding:0 14px}.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px}.toolbar select{min-width:145px}.layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px}.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 5px 20px #1230500b}.monthhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.monthhead h2{margin:0;font-size:1.4rem}.sub{font-size:.88rem;color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}.dow{text-align:center;font-size:.86rem;font-weight:750;padding:8px 2px;color:#48617b}.dow:first-child{color:var(--red)}.day{min-height:76px;border:1px solid #e4ebf3;border-radius:10px;padding:7px 5px;background:#fff;position:relative;cursor:pointer;overflow:hidden}.day:hover{border-color:#6aa5d7;background:#f7fbff}.day.empty{background:#f7f9fc;border-color:transparent;cursor:default}.day .num{font-weight:800;font-size:1.05rem}.day .be{font-size:.68rem;color:var(--muted)}.day .moon{font-size:.68rem;color:#516c92;display:block;margin-top:3px}.day .tag{display:block;font-size:.65rem;line-height:1.25;margin-top:4px;color:#8b5c00;white-space:normal}.day.sunday .num{color:var(--red)}.day.holiday{background:#fff8e3;border-color:#f2d37b}.day.buddha{box-shadow:inset 0 0 0 2px #c6b2ef}.day.today{outline:2px solid #1684d6;outline-offset:-2px}.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:.82rem;color:var(--muted);margin-top:12px}.dot{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px}.side h3{margin:0 0 10px}.side .section{padding-bottom:14px;margin-bottom:14px;border-bottom:1px solid var(--line)}.side .section:last-child{border:0;margin:0;padding:0}.event{padding:8px 0;border-bottom:1px dashed var(--line);font-size:.91rem}.event:last-child{border:0}.event b{color:#123e70}.event small{display:block;color:var(--muted)}.notice{font-size:.82rem;line-height:1.6;color:var(--muted);background:#f5f8fc;border-radius:10px;padding:10px}.detail{margin-top:14px;display:none}.detail.show{display:block}.detail h3{margin:0 0 6px}.detail p{margin:4px 0}.mode-modern{--navy:#263d63;--blue:#4664a8;--gold:#c5d6ff;--bg:#f5f6fa}.mode-modern header{background:linear-gradient(120deg,#263d63,#4664a8);border-color:#c5d6ff}.mode-modern .day.holiday{background:#fff0f0;border-color:#f1b6b6}.mode-modern button.primary{background:#d8e4ff;border-color:#c5d6ff}
+footer{text-align:center;color:var(--muted);font-size:.8rem;padding:22px 14px}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.side{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.side .section{border:1px solid var(--line);border-radius:12px;padding:12px;margin:0}.day{min-height:67px;padding:5px 3px}.day .tag{font-size:.58rem}.day .moon{font-size:.6rem}}
+@media(max-width:520px){main{padding:0 8px;margin-top:10px}.panel{padding:10px;border-radius:12px}.grid{gap:3px}.day{min-height:60px;border-radius:7px}.day .num{font-size:.95rem}.day .be{font-size:.59rem}.day .moon{display:none}.day .tag{font-size:.53rem}.side{grid-template-columns:1fr}.toolbar button{padding:8px 9px}.monthhead h2{font-size:1.15rem}}
+@media print{header{padding:12px;background:#fff;color:#111;border-bottom:2px solid #111}header h1,header p{color:#111}.actions,.toolbar,.side,footer{display:none!important}main{margin:0;max-width:none;padding:0}.layout{display:block}.panel{box-shadow:none;border:0;padding:0}.day{min-height:64px;break-inside:avoid}.day .tag{font-size:8pt}}
+</style>
+</head>
+<body>
+<header>
+ <div class="headerline"><div><h1>ปฏิทินไทย พ.ศ. 2569</h1><p>ค.ศ. 2026 · ปฏิทินสุริยคติ · วันสำคัญ · วันหยุด · ข้อมูลจันทรคติ</p></div>
+ <div class="actions"><button class="dark" id="themeBtn">🎨 เปลี่ยนรูปแบบ</button><button class="dark" id="installBtn" hidden>＋ ติดตั้งแอป</button></div></div>
+</header>
+<main>
+ <div class="toolbar">
+  <button id="prev">‹ เดือนก่อน</button><select id="monthSelect" aria-label="เลือกเดือน"></select><select id="yearSelect" aria-label="เลือกปี"><option value="2026">พ.ศ. 2569 / 2026</option></select><button id="next">เดือนถัดไป ›</button><button class="primary" id="todayBtn">วันนี้</button><button id="printBtn">พิมพ์ / PDF</button>
+ </div>
+ <div class="layout">
+  <section>
+   <div class="panel">
+    <div class="monthhead"><div><h2 id="monthTitle">มกราคม 2569</h2><div class="sub" id="monthSub">January 2026</div></div><div class="sub" id="countLabel"></div></div>
+    <div class="grid" id="calendarGrid"></div>
+    <div class="legend"><span><i class="dot" style="background:#fff0bd;border:1px solid #e6c55e"></i>วันหยุด/วันสำคัญ</span><span><i class="dot" style="background:#eee7ff;border:1px solid #c6b2ef"></i>วันพระ (ข้อมูลอ้างอิง)</span><span><i class="dot" style="background:#d9edff;border:1px solid #1684d6"></i>วันนี้</span></div>
+   </div>
+   <div class="panel detail" id="detail"><h3 id="detailTitle">รายละเอียดวันที่</h3><div id="detailBody"></div></div>
+  </section>
+  <aside class="panel side">
+   <div class="section"><h3>🐎 ข้อมูลปี 2569</h3><div class="event"><b>ปีนักษัตร:</b> ปีมะเมีย (ม้า) ตามปีนักษัตรไทยที่ใช้ทั่วไป</div><div class="event"><b>พุทธศักราช:</b> 2569</div><div class="event"><b>คริสต์ศักราช:</b> 2026</div><div class="event"><b>จุลศักราช:</b> 1387–1388 (ตามช่วงปี)</div></div>
+   <div class="section"><h3>📌 วันสำคัญเดือนนี้</h3><div id="monthEvents"></div></div>
+   <div class="section"><h3>🌙 วันพระเดือนนี้</h3><div id="moonEvents"></div></div>
+   <div class="section"><h3>🧭 ข้อมูลโหราศาสตร์ไทย</h3><div class="notice">ข้อมูลธงชัย อธิบดี อุบาทว์/อุบาสน และโลกาวินาศ ต้องยืนยันตามตำราหรือปฏิทินโหราศาสตร์ที่เลือก เว็บไซต์รุ่นนี้ยังไม่คำนวณฤกษ์รายวันโดยอัตโนมัติ เพื่อป้องกันการแสดงข้อมูลคลาดเคลื่อน</div></div>
+  </aside>
+ </div>
+ <p class="notice" style="margin-top:14px">หมายเหตุ: ปฏิทินนี้ทำงานจากข้อมูลที่ฝังในไฟล์และแคชของเบราว์เซอร์ จึงเปิดดูปฏิทินได้เมื่อออฟไลน์หลังเปิดเว็บไซต์อย่างน้อยหนึ่งครั้งขณะออนไลน์ วันหยุดและวันพระควรตรวจสอบกับประกาศทางการก่อนใช้วางแผนงาน เนื่องจากอาจมีประกาศเปลี่ยนแปลง</p>
+</main>
+<footer>ปฏิทินไทย พ.ศ. 2569 / ค.ศ. 2026 · ใช้งานฟรี · รองรับมือถือ · ออกแบบสำหรับ GitHub Pages</footer>
+<script src="./calendar-data.js"></script><script>
+const months=['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+const enMonths=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const dows=['อา','จ','อ','พ','พฤ','ศ','ส'];
+const msel=document.getElementById('monthSelect');months.forEach((m,i)=>{let o=document.createElement('option');o.value=i;o.textContent=m;msel.appendChild(o)});
+let selectedMonth=new Date().getFullYear()===2026?new Date().getMonth():0; let installPrompt=null;
+function key(y,m,d){return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`}
+function thaiDate(y,m,d){return `${d} ${months[m]} ${y+543}`}
+function render(){
+ const y=2026,m=Number(msel.value);selectedMonth=m;
+ document.getElementById('monthTitle').textContent=months[m]+' พ.ศ. 2569';
+ document.getElementById('monthSub').textContent=enMonths[m]+' 2026';
+ const first=new Date(y,m,1).getDay(), days=new Date(y,m+1,0).getDate(), grid=document.getElementById('calendarGrid');grid.innerHTML='';
+ dows.forEach((x,i)=>{let e=document.createElement('div');e.className='dow';e.textContent=x;grid.appendChild(e)});
+ for(let i=0;i<first;i++){let e=document.createElement('div');e.className='day empty';grid.appendChild(e)}
+ let holidays=0, moons=0;
+ for(let d=1;d<=days;d++){
+  const k=key(y,m,d), info=(CALENDAR_DATA[k]||{}), date=new Date(y,m,d), el=document.createElement('button');el.type='button';el.className='day'+(date.getDay()===0?' sunday':'')+(info.holiday?' holiday':'')+(info.buddha?' buddha':'')+(new Date().toDateString()===date.toDateString()?' today':'');
+  el.innerHTML=`<span class="num">${d}</span><span class="be">${d}/${m+1}</span>${info.lunar?`<span class="moon">${info.lunar}</span>`:''}${info.name?`<span class="tag">${info.name}</span>`:''}`;
+  if(info.holiday)holidays++;if(info.buddha)moons++;el.addEventListener('click',()=>showDetail(y,m,d,info));grid.appendChild(el)
+ }
+ document.getElementById('countLabel').textContent=`${days} วัน · ${holidays} วันสำคัญ · ${moons} วันพระ`;
+ const ev=Object.entries(CALENDAR_DATA).filter(([k,v])=>k.startsWith(`2026-${String(m+1).padStart(2,'0')}`)&&v.name);
+ document.getElementById('monthEvents').innerHTML=ev.filter(([k,v])=>v.holiday||v.important).map(([k,v])=>`<div class="event"><b>${Number(k.slice(8))} ${months[m]}</b> — ${v.name}</div>`).join('')||'<div class="sub">ไม่มีรายการที่บันทึกไว้ในเดือนนี้</div>';
+ document.getElementById('moonEvents').innerHTML=ev.filter(([k,v])=>v.buddha).map(([k,v])=>`<div class="event"><b>${Number(k.slice(8))} ${months[m]}</b><small>${v.lunar||'วันพระ'}</small></div>`).join('')||'<div class="sub">ยังไม่มีข้อมูลวันพระยืนยันในเดือนนี้</div>';
+}
+function showDetail(y,m,d,info){const el=document.getElementById('detail');el.classList.add('show');document.getElementById('detailTitle').textContent=thaiDate(y,m,d);document.getElementById('detailBody').innerHTML=`<p><b>วันในสัปดาห์:</b> ${['วันอาทิตย์','วันจันทร์','วันอังคาร','วันพุธ','วันพฤหัสบดี','วันศุกร์','วันเสาร์'][new Date(y,m,d).getDay()]}</p><p><b>ข้อมูล:</b> ${info.name||'ไม่มีวันสำคัญที่บันทึกไว้'}</p><p><b>จันทรคติ:</b> ${info.lunar||'ยังไม่มีข้อมูลยืนยัน'}</p><p><b>ประเภท:</b> ${info.holiday?'วันหยุดที่บันทึกไว้':info.buddha?'วันพระ (อ้างอิง)':info.important?'วันสำคัญ':'วันปกติ'}</p>`}
+document.getElementById('prev').onclick=()=>{msel.value=(Number(msel.value)+11)%12;render()};document.getElementById('next').onclick=()=>{msel.value=(Number(msel.value)+1)%12;render()};msel.onchange=render;document.getElementById('todayBtn').onclick=()=>{msel.value=new Date().getMonth();render();showDetail(2026,Number(msel.value),new Date().getDate(),CALENDAR_DATA[key(2026,Number(msel.value),new Date().getDate())]||{})};document.getElementById('printBtn').onclick=()=>window.print();
+document.getElementById('themeBtn').onclick=()=>document.body.classList.toggle('mode-modern');
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e;document.getElementById('installBtn').hidden=false});document.getElementById('installBtn').onclick=async()=>{if(installPrompt){installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;document.getElementById('installBtn').hidden=true}else alert('ใช้เมนูของเบราว์เซอร์ “เพิ่มไปยังหน้าจอหลัก” เพื่อติดตั้ง')}
+msel.value=selectedMonth;render();
+</script>
+</body></html>
