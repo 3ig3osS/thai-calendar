@@ -28,7 +28,7 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:22px 14px}
 </header>
 <main>
  <div class="toolbar">
-  <button id="prev">‹ เดือนก่อน</button><select id="monthSelect" aria-label="เลือกเดือน"></select><select id="yearSelect" aria-label="เลือกปี"><option value="2026">พ.ศ. 2569 / 2026</option></select><button id="next">เดือนถัดไป ›</button><button class="primary" id="todayBtn">วันนี้</button><button id="printBtn">พิมพ์ / PDF</button>
+  <button id="prev">‹ เดือนก่อน</button><select id="monthSelect" aria-label="เลือกเดือน"></select><select id="yearSelect" aria-label="เลือกปี"></select><input id="searchDate" placeholder="ค้นหาวันสำคัญ..." aria-label="ค้นหาวันสำคัญ" style="max-width:190px"><button id="next">เดือนถัดไป ›</button><button class="primary" id="todayBtn">วันนี้</button><button id="printBtn">พิมพ์ / PDF</button>
  </div>
  <div class="layout">
   <section>
@@ -43,43 +43,61 @@ footer{text-align:center;color:var(--muted);font-size:.8rem;padding:22px 14px}
    <div class="section"><h3>🐎 ข้อมูลปี 2569</h3><div class="event"><b>ปีนักษัตร:</b> ปีมะเมีย (ม้า) ตามปีนักษัตรไทยที่ใช้ทั่วไป</div><div class="event"><b>พุทธศักราช:</b> 2569</div><div class="event"><b>คริสต์ศักราช:</b> 2026</div><div class="event"><b>จุลศักราช:</b> 1387–1388 (ตามช่วงปี)</div></div>
    <div class="section"><h3>📌 วันสำคัญเดือนนี้</h3><div id="monthEvents"></div></div>
    <div class="section"><h3>🌙 วันพระเดือนนี้</h3><div id="moonEvents"></div></div>
-   <div class="section"><h3>🧭 ข้อมูลโหราศาสตร์ไทย</h3><div class="notice">ข้อมูลธงชัย อธิบดี อุบาทว์/อุบาสน และโลกาวินาศ ต้องยืนยันตามตำราหรือปฏิทินโหราศาสตร์ที่เลือก เว็บไซต์รุ่นนี้ยังไม่คำนวณฤกษ์รายวันโดยอัตโนมัติ เพื่อป้องกันการแสดงข้อมูลคลาดเคลื่อน</div></div>
+   <div class="section"><h3>🧭 ข้อมูลโหราศาสตร์ไทย</h3><div class="event"><b>วันธงชัย / อธิบดี</b><small>แสดงเป็นข้อมูลอ้างอิงเมื่อมีข้อมูลที่ตรวจสอบแล้วเท่านั้น</small></div><div class="notice">ข้อมูลธงชัย อธิบดี อุบาทว์/อุบาสน และโลกาวินาศขึ้นกับตำราและปีที่ใช้ เว็บไซต์จะไม่เดาค่ารายปีเอง โปรดเทียบปฏิทินโหราศาสตร์ไทยที่เชื่อถือได้ก่อนใช้กำหนดฤกษ์</div></div>
   </aside>
  </div>
- <p class="notice" style="margin-top:14px">หมายเหตุ: ปฏิทินนี้ทำงานจากข้อมูลที่ฝังในไฟล์และแคชของเบราว์เซอร์ จึงเปิดดูปฏิทินได้เมื่อออฟไลน์หลังเปิดเว็บไซต์อย่างน้อยหนึ่งครั้งขณะออนไลน์ วันหยุดและวันพระควรตรวจสอบกับประกาศทางการก่อนใช้วางแผนงาน เนื่องจากอาจมีประกาศเปลี่ยนแปลง</p>
+ <p class="notice" style="margin-top:14px">หมายเหตุ: เลือกดูได้ตั้งแต่ ค.ศ. 1900–2100 วันหยุดประจำปีบางวันคำนวณจากกฎวันที่คงที่ ส่วนวันพระ/จันทรคติที่ไม่ได้มาจากข้อมูลรายวันจะเป็นเพียงค่าประมาณจากเฟสดวงจันทร์ ไม่ใช่จันทรคติไทยที่รับรอง ควรตรวจสอบกับแหล่งทางการก่อนใช้วางแผนงาน</p>
 </main>
 <footer>ปฏิทินไทย พ.ศ. 2569 / ค.ศ. 2026 · ใช้งานฟรี · รองรับมือถือ · ออกแบบสำหรับ GitHub Pages</footer>
 <script src="./calendar-data.js"></script><script>
 const months=['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
 const enMonths=['January','February','March','April','May','June','July','August','September','October','November','December'];
 const dows=['อา','จ','อ','พ','พฤ','ศ','ส'];
-const msel=document.getElementById('monthSelect');months.forEach((m,i)=>{let o=document.createElement('option');o.value=i;o.textContent=m;msel.appendChild(o)});
-let selectedMonth=new Date().getFullYear()===2026?new Date().getMonth():0; let installPrompt=null;
+const msel=document.getElementById('monthSelect'), ysel=document.getElementById('yearSelect');
+months.forEach((m,i)=>{let o=document.createElement('option');o.value=i;o.textContent=m;msel.appendChild(o)});
+for(let y=1900;y<=2100;y++){let o=document.createElement('option');o.value=y;o.textContent=`พ.ศ. ${y+543} / ค.ศ. ${y}`;ysel.appendChild(o)}
+let now=new Date(), selectedMonth=now.getMonth(), selectedYear=now.getFullYear();if(selectedYear<1900||selectedYear>2100)selectedYear=2026;let installPrompt=null;
 function key(y,m,d){return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`}
 function thaiDate(y,m,d){return `${d} ${months[m]} ${y+543}`}
+function eventInfo(y,m,d){
+ const k=key(y,m,d);let info=(CALENDAR_DATA[k]||{});if(info.name||info.lunar||info.buddha||info.holiday)return {...info};
+ const date=new Date(y,m,d), mm=m+1;let out={name:'',holiday:false,buddha:false,important:false,lunar:''};
+ const fixed={ '1-1':['วันขึ้นปีใหม่',true], '4-6':['วันจักรี',true], '5-1':['วันแรงงานแห่งชาติ',false], '5-4':['วันฉัตรมงคล',true], '6-3':['วันเฉลิมพระชนมพรรษาสมเด็จพระราชินี',true], '7-28':['วันเฉลิมพระชนมพรรษาพระบาทสมเด็จพระเจ้าอยู่หัว',true], '8-12':['วันแม่แห่งชาติ',true], '10-13':['วันนวมินทรมหาราช',false], '10-23':['วันปิยมหาราช',true], '12-5':['วันพ่อแห่งชาติ / วันชาติ',false], '12-10':['วันรัฐธรรมนูญ',true], '12-31':['วันสิ้นปี',true]};
+ const item=fixed[`${mm}-${d}`];if(item){out.name=item[0];out.holiday=item[1];out.important=true}
+ if(mm===4&&d>=13&&d<=15){out.name='วันสงกรานต์';out.holiday=true;out.important=true}
+ // Astronomical lunar phase estimate. This is explicitly an approximation, not official Thai lunar-calendar data.
+ const jd=Math.floor((Date.UTC(y,m,d)-Date.UTC(2000,0,6,18,14))/86400000)+0.5;const age=((jd/29.530588853)%1+1)%1;const day=Math.floor(age*29.530588853)+1;
+ if(Math.abs(age-0)<0.025||Math.abs(age-0.5)<0.025||Math.abs(age-0.25)<0.022||Math.abs(age-0.75)<0.022){out.buddha=true;out.lunar=(age<0.025?'ใกล้วันเดือนดับ':age>0.475&&age<0.525?'ใกล้วันเพ็ญ':age<0.3?'ใกล้ขึ้น 8 ค่ำ':'ใกล้แรม 8 ค่ำ')+' (คำนวณประมาณการ)';if(!out.name)out.name='วันพระโดยประมาณ'}
+ else out.lunar=(age<0.5?'ข้างขึ้น':'ข้างแรม')+' โดยประมาณ';
+ return out;
+}
 function render(){
- const y=2026,m=Number(msel.value);selectedMonth=m;
- document.getElementById('monthTitle').textContent=months[m]+' พ.ศ. 2569';
- document.getElementById('monthSub').textContent=enMonths[m]+' 2026';
+ const y=Number(ysel.value),m=Number(msel.value);selectedMonth=m;selectedYear=y;
+ document.getElementById('monthTitle').textContent=months[m]+' พ.ศ. '+(y+543);
+ document.getElementById('monthSub').textContent=enMonths[m]+' '+y;
  const first=new Date(y,m,1).getDay(), days=new Date(y,m+1,0).getDate(), grid=document.getElementById('calendarGrid');grid.innerHTML='';
  dows.forEach((x,i)=>{let e=document.createElement('div');e.className='dow';e.textContent=x;grid.appendChild(e)});
  for(let i=0;i<first;i++){let e=document.createElement('div');e.className='day empty';grid.appendChild(e)}
- let holidays=0, moons=0;
+ let holidays=0, moons=0;const q=(document.getElementById('searchDate').value||'').trim().toLowerCase();
  for(let d=1;d<=days;d++){
-  const k=key(y,m,d), info=(CALENDAR_DATA[k]||{}), date=new Date(y,m,d), el=document.createElement('button');el.type='button';el.className='day'+(date.getDay()===0?' sunday':'')+(info.holiday?' holiday':'')+(info.buddha?' buddha':'')+(new Date().toDateString()===date.toDateString()?' today':'');
+  const k=key(y,m,d),info=eventInfo(y,m,d),date=new Date(y,m,d),el=document.createElement('button');el.type='button';el.className='day'+(date.getDay()===0?' sunday':'')+(info.holiday?' holiday':'')+(info.buddha?' buddha':'')+(new Date().toDateString()===date.toDateString()?' today':'');
+  const text=(info.name+' '+(info.lunar||'')).toLowerCase();if(q&&!text.includes(q)&&!String(d).includes(q)){el.style.opacity='.25'}
   el.innerHTML=`<span class="num">${d}</span><span class="be">${d}/${m+1}</span>${info.lunar?`<span class="moon">${info.lunar}</span>`:''}${info.name?`<span class="tag">${info.name}</span>`:''}`;
   if(info.holiday)holidays++;if(info.buddha)moons++;el.addEventListener('click',()=>showDetail(y,m,d,info));grid.appendChild(el)
  }
- document.getElementById('countLabel').textContent=`${days} วัน · ${holidays} วันสำคัญ · ${moons} วันพระ`;
- const ev=Object.entries(CALENDAR_DATA).filter(([k,v])=>k.startsWith(`2026-${String(m+1).padStart(2,'0')}`)&&v.name);
- document.getElementById('monthEvents').innerHTML=ev.filter(([k,v])=>v.holiday||v.important).map(([k,v])=>`<div class="event"><b>${Number(k.slice(8))} ${months[m]}</b> — ${v.name}</div>`).join('')||'<div class="sub">ไม่มีรายการที่บันทึกไว้ในเดือนนี้</div>';
- document.getElementById('moonEvents').innerHTML=ev.filter(([k,v])=>v.buddha).map(([k,v])=>`<div class="event"><b>${Number(k.slice(8))} ${months[m]}</b><small>${v.lunar||'วันพระ'}</small></div>`).join('')||'<div class="sub">ยังไม่มีข้อมูลวันพระยืนยันในเดือนนี้</div>';
+ document.getElementById('countLabel').textContent=`${days} วัน · ${holidays} วันหยุด/สำคัญ · ${moons} วันพระ/จันทรคติประมาณการ`;
+ const ev=Array.from({length:days},(_,i)=>{let d=i+1;return [key(y,m,d),eventInfo(y,m,d)]}).filter(([k,v])=>v.name);
+ document.getElementById('monthEvents').innerHTML=ev.filter(([k,v])=>v.holiday||v.important).map(([k,v])=>`<div class="event"><b>${Number(k.slice(8))} ${months[m]}</b> — ${v.name}</div>`).join('')||'<div class="sub">ไม่มีวันสำคัญที่บันทึกไว้</div>';
+ document.getElementById('moonEvents').innerHTML=ev.filter(([k,v])=>v.buddha).map(([k,v])=>`<div class="event"><b>${Number(k.slice(8))} ${months[m]}</b><small>${v.lunar||'วันพระโดยประมาณ'}</small></div>`).join('')||'<div class="sub">ไม่มีวันพระโดยประมาณในเดือนนี้</div>';
 }
-function showDetail(y,m,d,info){const el=document.getElementById('detail');el.classList.add('show');document.getElementById('detailTitle').textContent=thaiDate(y,m,d);document.getElementById('detailBody').innerHTML=`<p><b>วันในสัปดาห์:</b> ${['วันอาทิตย์','วันจันทร์','วันอังคาร','วันพุธ','วันพฤหัสบดี','วันศุกร์','วันเสาร์'][new Date(y,m,d).getDay()]}</p><p><b>ข้อมูล:</b> ${info.name||'ไม่มีวันสำคัญที่บันทึกไว้'}</p><p><b>จันทรคติ:</b> ${info.lunar||'ยังไม่มีข้อมูลยืนยัน'}</p><p><b>ประเภท:</b> ${info.holiday?'วันหยุดที่บันทึกไว้':info.buddha?'วันพระ (อ้างอิง)':info.important?'วันสำคัญ':'วันปกติ'}</p>`}
-document.getElementById('prev').onclick=()=>{msel.value=(Number(msel.value)+11)%12;render()};document.getElementById('next').onclick=()=>{msel.value=(Number(msel.value)+1)%12;render()};msel.onchange=render;document.getElementById('todayBtn').onclick=()=>{msel.value=new Date().getMonth();render();showDetail(2026,Number(msel.value),new Date().getDate(),CALENDAR_DATA[key(2026,Number(msel.value),new Date().getDate())]||{})};document.getElementById('printBtn').onclick=()=>window.print();
-document.getElementById('themeBtn').onclick=()=>document.body.classList.toggle('mode-modern');
+function showDetail(y,m,d,info){const el=document.getElementById('detail');el.classList.add('show');document.getElementById('detailTitle').textContent=thaiDate(y,m,d);document.getElementById('detailBody').innerHTML=`<p><b>วันในสัปดาห์:</b> ${['วันอาทิตย์','วันจันทร์','วันอังคาร','วันพุธ','วันพฤหัสบดี','วันศุกร์','วันเสาร์'][new Date(y,m,d).getDay()]}</p><p><b>ข้อมูล:</b> ${info.name||'ไม่มีวันสำคัญที่บันทึกไว้'}</p><p><b>จันทรคติ:</b> ${info.lunar||'ยังไม่มีข้อมูลจันทรคติยืนยัน'}</p><p><b>ประเภท:</b> ${info.holiday?'วันหยุดที่บันทึกไว้':info.buddha?'วันพระ/จันทรคติประมาณการ':info.important?'วันสำคัญ':'วันปกติ'}</p><p class="sub">จันทรคติที่ระบบคำนวณเองเป็นเพียงการประมาณจากเฟสดวงจันทร์ ไม่ใช่ข้อมูลรับรองตามปฏิทินจันทรคติไทย</p>`}
+document.getElementById('prev').onclick=()=>{if(Number(msel.value)===0){if(Number(ysel.value)>1900){ysel.value=Number(ysel.value)-1;msel.value=11}}else msel.value=Number(msel.value)-1;render()};
+document.getElementById('next').onclick=()=>{if(Number(msel.value)===11){if(Number(ysel.value)<2100){ysel.value=Number(ysel.value)+1;msel.value=0}}else msel.value=Number(msel.value)+1;render()};
+msel.onchange=render;ysel.onchange=render;document.getElementById('searchDate').oninput=render;
+document.getElementById('todayBtn').onclick=()=>{let n=new Date();if(n.getFullYear()>=1900&&n.getFullYear()<=2100){ysel.value=n.getFullYear();msel.value=n.getMonth();render();showDetail(n.getFullYear(),n.getMonth(),n.getDate(),eventInfo(n.getFullYear(),n.getMonth(),n.getDate()))}};
+document.getElementById('printBtn').onclick=()=>window.print();document.getElementById('themeBtn').onclick=()=>document.body.classList.toggle('mode-modern');
 if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e;document.getElementById('installBtn').hidden=false});document.getElementById('installBtn').onclick=async()=>{if(installPrompt){installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;document.getElementById('installBtn').hidden=true}else alert('ใช้เมนูของเบราว์เซอร์ “เพิ่มไปยังหน้าจอหลัก” เพื่อติดตั้ง')}
-msel.value=selectedMonth;render();
+msel.value=selectedMonth;ysel.value=selectedYear;render();
 </script>
 </body></html>
